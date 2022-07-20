@@ -1,13 +1,5 @@
 import { logSaving } from "./logSave";
 
-const db = require("./config/sql-connect");
-const mongodb = require("./config/nosql-connect");
-const moment = require("moment");
-const aws = require("aws-sdk");
-const fs = require("fs");
-const es = require("event-stream");
-const parse = require("csv-parse/lib/sync");
-const sendgridClient = require(`./bin/sendgridClient`);
 /**
  * It checks if a file exists in an S3 bucket.
  *
@@ -19,7 +11,14 @@ const sendgridClient = require(`./bin/sendgridClient`);
  * @param inputFolder - 'input/'
  */
 const checkIfFileExists = async (
-  s3: { headObject: (arg0: { Bucket: any; Key: any; }) => { (): any; new(): any; promise: { (): any; new(): any; }; }; getSignedUrl: (arg0: string, arg1: { Bucket: any; Key: any; }) => any; },
+  s3: {
+    headObject: (arg0: { Bucket: any; Key: any }) => {
+      (): any;
+      new (): any;
+      promise: { (): any; new (): any };
+    };
+    getSignedUrl: (arg0: string, arg1: { Bucket: any; Key: any }) => any;
+  },
   db: any,
   filename: any,
   uploadBucket: any,

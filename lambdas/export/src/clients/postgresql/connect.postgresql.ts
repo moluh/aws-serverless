@@ -1,6 +1,6 @@
 const EasyPostgres = require("easy-postgres");
 
-const sql_db = EasyPostgres({
+const db = EasyPostgres({
   database: process.env.SQL_DATABASE,
   host: process.env.SQL_HOST,
   port: process.env.SQL_PORT,
@@ -8,4 +8,4 @@ const sql_db = EasyPostgres({
   password: process.env.SQL_PASSWORD,
 });
 
-export default sql_db;
+export default db;

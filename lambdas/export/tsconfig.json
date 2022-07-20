@@ -1,20 +1,30 @@
 {
-
+  "extends": "@tsconfig/node16/tsconfig.json",
   "compilerOptions": {
-    "target": "es2020",
+    "baseUrl": "./",
+    "paths": {
+      "src/*": ["src/*"]
+    },
+    "outDir": "dist/",
+    "rootDir": "src",
+    "lib": ["es6"],
+    "target": "es6",
+    "module": "commonjs",
     "strict": true,
     "preserveConstEnums": true,
-    "noEmit": true,
+    // "noEmit": true,
     "sourceMap": false,
-    "module":"commonjs",
-    "moduleResolution":"node",
-    "esModuleInterop": true, 
+    "moduleResolution": "node",
+    "esModuleInterop": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true, 
-    "isolatedModules": true, 
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": false,
+    "resolveJsonModule": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true
   },
-  "target": "es2020", // or a more recent ecmascript version
+  "exclude": ["node_modules", "tests"],
+  "target": "es6", // or a more recent ecmascript version
   "experimentalDecorators": true,
-  "emitDecoratorMetadata": true,
-  "exclude": ["node_modules", "**/*.test.ts"]
+  "emitDecoratorMetadata": true
 }
