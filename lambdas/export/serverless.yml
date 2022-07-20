@@ -1,0 +1,47 @@
+service: moluh-payments-export
+variablesResolutionMode: 20210326
+
+provider:
+  name: aws
+  region: us-east-2
+  deploymentBucket:
+    name: moluh-export-artifacts
+  deploymentPrefix: moluh-payments-export
+  # stackName: ${env:ENVIRONMENT}-moluh-payments-export
+  # disableDefaultOutputExportNames: true
+
+functions:
+  export:
+    handler: handler.exportPayments
+    events:
+      - http:
+          path: exportPayments
+          method: post
+      - http:
+          path: exportAnotherThing
+          method: post
+    memorySize: 1024
+    runtime: nodejs12.x
+    timeout: 600
+    role: arn:aws:iam::123123123:role/moluh-payments-export
+
+plugins:
+  - serverless-offline
+  - serverless-dotenv-plugin
+
+    ## Production:
+    # name: ${env:ENVIRONMENT}-moluh-payments-export
+    # image: ${env:AWS_ECR_URL}/${env:AWS_ECR_REPO}:${env:GIT_COMMIT}
+    # vpc:
+    #   securityGroupIds: { 'Fn::Split': [ ",", "${ssm:${env:ENVIRONMENT}-moluh-payments-export-sgIds}" ] }
+    #   subnetIds: { 'Fn::Split': [ ",", "${ssm:${env:ENVIRONMENT}-moluh-export-vpc-privateSubnetIds}" ] }
+    # environment:
+    #   NODE_ENV: production
+    #   SQL_USER: ${ssm:${env:ENVIRONMENT}-moluh-export-postgresql-user}
+    #   SQL_PASSWORD: ${ssm:${env:ENVIRONMENT}-moluh-export-postgresql-password}
+    #   SQL_DATABASE: backend
+    #   SQL_DIALECT: postgres
+    #   SQL_HOST: ${ssm:${env:ENVIRONMENT}-moluh-export-postgresql-host}
+    #   SENDGRID_API_KEY: ${ssm:${env:ENVIRONMENT}-moluh-export-sendgrid-apiKey}
+    #   MONGODB_HOST: ${ssm:${env:ENVIRONMENT}-moluh-export-mongodb-host}/mongo-backend
+    #   FILESERVER: "https://api.prd.moluh-export.com/download/"
